@@ -68,13 +68,11 @@ class ImageClassifierHelper(
                 MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
             }.copy(Bitmap.Config.ARGB_8888, true)
 
-        /*Do Preprocessing*/
         val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(224,224, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR))
             .add(CastOp(DataType.FLOAT32))
             .build()
 
-        // This will convert bitmap to become TensorImage dan proceed with imageProcessor
         val tensorImage = imageProcessor.process(TensorImage.fromBitmap(bitmap))
 
         var inferenceTime = SystemClock.uptimeMillis()
