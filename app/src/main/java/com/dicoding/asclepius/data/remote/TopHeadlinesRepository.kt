@@ -15,7 +15,7 @@ class TopHeadlinesRepository(
     suspend fun getTopHeadlines() {
         _topHeadlines.postValue(Result.Loading)
         try {
-            val response = apiService.getTopHeadlinesUS(country = "us", "2c22331536494c1cb9833674128f9bb3")
+            val response = apiService.getTopHeadlinesUS()
             _topHeadlines.postValue(Result.Success(response.articles))
         } catch (e: Exception) {
             _topHeadlines.postValue(Result.Error("Error: ${e.message}"))

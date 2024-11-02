@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -20,22 +22,22 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            buildConfigField("boolean", "DEBUG", "false")
+            buildConfigField("String", "API_KEY", "\"2c22331536494c1cb9833674128f9bb3\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
         debug {
-            buildConfigField("boolean", "DEBUG", "true")
+            buildConfigField("String", "API_KEY", "\"2c22331536494c1cb9833674128f9bb3\"")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         viewBinding = true
@@ -50,8 +52,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-fragment-ktx:2.8.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.8.3")
     testImplementation("junit:junit:4.13.2")
@@ -59,6 +61,11 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation ("com.github.bumptech.glide:glide:4.15.1")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2") // Versi terbaru Room
+    ksp("androidx.room:room-compiler:2.5.2") // Kompilator KSP untuk Room
+    implementation("androidx.room:room-ktx:2.5.2")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

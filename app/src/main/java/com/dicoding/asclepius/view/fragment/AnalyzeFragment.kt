@@ -11,10 +11,18 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import com.dicoding.asclepius.R
+import com.dicoding.asclepius.data.local.entity.HistoryEntity
 import com.dicoding.asclepius.databinding.FragmentAnalyzeBinding
 import com.dicoding.asclepius.helper.ImageClassifierHelper
 import com.dicoding.asclepius.view.activity.ResultActivity
+import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModel
+import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModelFactory
+import androidx.navigation.fragment.findNavController
+import com.dicoding.asclepius.viewmodels.TopHeadlinesViewModel
+import com.dicoding.asclepius.viewmodels.TopHeadlinesViewModelFactory
 import org.tensorflow.lite.task.vision.classifier.Classifications
 
 class AnalyzeFragment : Fragment() {
@@ -26,6 +34,10 @@ class AnalyzeFragment : Fragment() {
     private var labelOfImage: String? = null
     private var scoreOfImage: String? = null
 
+    private val viewModel: HistoryIndicatedViewModel by viewModels {
+        HistoryIndicatedViewModelFactory.getInstance(requireActivity())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,13 +47,16 @@ class AnalyzeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.analyzeButton.setOnClickListener {
             currentImageUri?.let {
                 analyzeImage()
             } ?: run { showToast(getString(R.string.empty_image_warning)) }
+        }
+
+        binding.iconHistory.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_analyze_to_navigation_history)
         }
     }
 
@@ -88,6 +103,13 @@ class AnalyzeFragment : Fragment() {
 
                             labelOfImage = label
                             scoreOfImage = score.formatToString()
+
+                            val history = HistoryEntity(
+                                historyOfImage = currentImageUri.toString(),
+                                historyOfLabel = label,
+                                historyOfScore = score.formatToString()
+                            )
+                            viewModel.insert(history)
                             moveToResult()
                         }
                     }

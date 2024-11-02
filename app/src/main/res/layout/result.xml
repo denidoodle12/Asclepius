@@ -46,18 +46,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:contentDescription="@string/content_description_back" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@drawable/d_shape_bookmarks_yellow"
-                    android:padding="6dp"
-                    android:src="@drawable/baseline_bookmark_24"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/backFromDiagnose"
-                    android:contentDescription="@string/condesc_bookmarks_analyis" />
-
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"

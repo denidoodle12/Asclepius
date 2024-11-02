@@ -59,7 +59,7 @@
     <string name="save_bookmark">Save Bookmark</string>
     <string name="info">No favorite events available</string>
     <string name="title_analyze">Analyze</string>
-    <string name="title_TopHeadlines">Explore Top Headlines</string>
+    <string name="title_TopHeadlines">top health headlines</string>
     <string name="desc_diagnose_results">Based on the image you uploaded\nThe analysis result of the image states that:\n</string>
     <string name="definition_cancer">Cancer is a disease characterized by the uncontrolled growth and spread of abnormal cells in the body. Normally, cells grow, divide, and die in an orderly manner. However, cancerous cells continue to grow and divide instead of dying, forming masses of tissue called tumors. These tumors can invade nearby tissues and may spread to other parts of the body through the bloodstream or lymphatic system, a process known as metastasis.\n\nThere are many types of cancer, each named after the organ or cell type where it begins, such as lung cancer, breast cancer, and skin cancer. Cancer can develop due to genetic factors, lifestyle choices (like smoking or diet), environmental exposures (such as radiation or certain chemicals), or infections. The disease is often treated with surgery, radiation therapy, chemotherapy, immunotherapy, or a combination of these methods, depending on the type and stage of cancer. Early detection and treatment are key to improving the chances of survival.</string>
     <string name="whatiscancer">What is Cancer</string>
@@ -73,4 +73,7 @@
     <string name="content_description_back">This is content description of back page</string>
     <string name="title_explore">Lets Explore More!</string>
     <string name="title_TopHeadline">Top US Headlines</string>
+    <string name="history">History</string>
+    <string name="title_history">History</string>
+    <string name="title_health">Health news</string>
 </resources>
