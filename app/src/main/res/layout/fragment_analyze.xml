@@ -30,13 +30,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/icon_history"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:padding="6dp"
-        android:src="@drawable/baseline_bookmark_24"
+        android:src="@drawable/baseline_history_24"
         android:background="@drawable/d_shape_bookmarks_yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +66,7 @@
                         android:id="@+id/imageView2"
                         android:layout_width="130dp"
                         android:layout_height="200dp"
-                        android:src="@drawable/pot"
+                        android:src="@drawable/defeatcancer"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:contentDescription="@string/content_description_homeImage" />
@@ -137,7 +137,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="260dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="20dp"
                 app:cardCornerRadius="25dp">
@@ -148,7 +148,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:background="@drawable/top_corner_detail"
-                    android:src="@drawable/ic_place_holder"
+                    android:src="@drawable/preview"
                     android:contentDescription="@string/content_description_preview" />
 
             </androidx.cardview.widget.CardView>

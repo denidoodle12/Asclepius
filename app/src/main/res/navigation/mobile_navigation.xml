@@ -15,5 +15,15 @@
         android:id="@+id/navigation_analyze"
         android:name="com.dicoding.asclepius.view.fragment.AnalyzeFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_analyze" >
+        <action
+            android:id="@+id/action_navigation_analyze_to_navigation_history"
+            app:destination="@id/navigation_history" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.dicoding.asclepius.view.fragment.HistoryFragment"
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>
