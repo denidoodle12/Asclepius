@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="12dp"
     card_view:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_mediaCover"
@@ -62,9 +63,26 @@
             android:text="@string/title_name_headlines"
             android:textColor="@color/white"
             android:textSize="20sp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="@id/iv_mediaCover"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="@+id/tv_author" />
+
+        <TextView
+            android:id="@+id/tv_descHeadlines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/vinilatest_condensedlight"
+            android:maxLines="3"
+            android:text="@string/tvDescHeadlines"
+            android:textSize="16sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="@+id/tv_title_name"
+            card_view:layout_constraintTop_toBottomOf="@id/iv_mediaCover" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dicoding.asclepius.R
 import com.dicoding.asclepius.data.local.entity.HistoryEntity
 import com.dicoding.asclepius.databinding.ItemsHistoryBinding
 
@@ -26,7 +27,7 @@ class HistoryAdapter() : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>
                 .load(historyEntity.historyOfImage)
                 .into(binding.ivImageHistory)
             binding.historyLabel.text = historyEntity.historyOfLabel
-            binding.historyScore.text = historyEntity.historyOfScore
+            binding.historyScore.text = binding.root.context.getString(R.string.confidence_score, historyEntity.historyOfScore)
         }
     }
 
