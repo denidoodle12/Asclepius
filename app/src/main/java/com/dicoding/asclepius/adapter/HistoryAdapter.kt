@@ -10,7 +10,7 @@ import com.dicoding.asclepius.R
 import com.dicoding.asclepius.data.local.entity.HistoryEntity
 import com.dicoding.asclepius.databinding.ItemsHistoryBinding
 
-class HistoryAdapter() : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemsHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
