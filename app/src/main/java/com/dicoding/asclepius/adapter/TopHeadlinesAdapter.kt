@@ -31,6 +31,7 @@ class TopHeadlinesAdapter(private val onClickItem: (ArticlesItem) -> Unit ) : Li
                 .into(binding.ivMediaCover)
             binding.tvAuthor.text = headlinesItem.author
             binding.tvTitleName.text = headlinesItem.title
+            binding.tvDescHeadlines.text = headlinesItem.description
         }
     }
 

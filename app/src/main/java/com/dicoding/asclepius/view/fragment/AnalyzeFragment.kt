@@ -1,5 +1,6 @@
 package com.dicoding.asclepius.view.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -21,9 +23,12 @@ import com.dicoding.asclepius.view.activity.ResultActivity
 import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModel
 import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModelFactory
 import androidx.navigation.fragment.findNavController
+import com.dicoding.asclepius.createImageUri
 import com.dicoding.asclepius.viewmodels.TopHeadlinesViewModel
 import com.dicoding.asclepius.viewmodels.TopHeadlinesViewModelFactory
+import com.yalantis.ucrop.UCrop
 import org.tensorflow.lite.task.vision.classifier.Classifications
+import java.io.File
 
 class AnalyzeFragment : Fragment() {
     private var _binding: FragmentAnalyzeBinding? = null
@@ -69,7 +74,7 @@ class AnalyzeFragment : Fragment() {
     private val launcherGallery = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         uri?.let {
             currentImageUri = it
-            showImage()
+            startCrop(it)
         } ?: Log.d("Photo Picker", "No media selected")
     }
 
@@ -77,6 +82,41 @@ class AnalyzeFragment : Fragment() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
             binding.previewImageView.setImageURI(it)
+        }
+    }
+
+    private val launcherUCrop = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val resultUri = UCrop.getOutput(result.data!!)
+            if (resultUri != null) {
+                currentImageUri = resultUri
+                showImage()
+            } else {
+                showToast("Crop gagal, coba lagi.")
+                Log.e("AnalyzeFragment", "Error: URI hasil crop null.")
+            }
+        } else if (result.resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(result.data!!)
+            showToast("Error: ${cropError?.message}")
+            Log.e("AnalyzeFragment", "UCrop Error: ${cropError?.message}")
+        } else {
+            Log.e("AnalyzeFragment", "Result code tidak dikenali: ${result.resultCode}")
+        }
+    }
+
+    private fun startCrop(uri: Uri) {
+        // Panggil createImageUri untuk mendapatkan URI baru
+        val destinationUri = createImageUri(requireContext())
+        if (destinationUri != null) {
+            // Melanjutkan dengan UCrop
+            val uCropIntent = UCrop.of(uri, destinationUri)
+                .withAspectRatio(1f, 1f)
+                .withMaxResultSize(1080, 1080)
+                .getIntent(requireContext())
+            launcherUCrop.launch(uCropIntent)
+        } else {
+            Log.e("AnalyzeFragment", "Gagal membuat URI untuk gambar.")
+            showToast("Gagal membuat URI untuk gambar. Silakan coba lagi.")
         }
     }
 
