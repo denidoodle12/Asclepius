@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.asclepius.R
 import com.dicoding.asclepius.adapter.HistoryAdapter
-import com.dicoding.asclepius.data.local.HistoryIndicatedRepository
 import com.dicoding.asclepius.databinding.FragmentHistoryBinding
 import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModel
 import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModelFactory
@@ -42,8 +40,26 @@ class HistoryFragment : Fragment() {
             adapter = historyAdapter
         }
 
+        binding.iconDeleteHistory.setOnClickListener {
+            viewModel.deleteAllHistory()
+            historyAdapter.submitList(emptyList())
+            binding.iconDeleteHistory.visibility = View.GONE
+            binding.emptyHistory.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.getAllHistory { listHistory ->
             historyAdapter.submitList(listHistory)
+
+            if (listHistory.isEmpty()) {
+                binding.iconDeleteHistory.visibility = View.GONE
+                binding.emptyHistory.visibility = View.VISIBLE
+            } else {
+                binding.iconDeleteHistory.visibility = View.VISIBLE
+                binding.emptyHistory.visibility = View.GONE
+            }
         }
     }
 }

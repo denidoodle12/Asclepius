@@ -1,6 +1,5 @@
 package com.dicoding.asclepius.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.asclepius.data.remote.TopHeadlinesRepository
@@ -18,7 +17,7 @@ class TopHeadlinesViewModelFactory private constructor(private val repository: T
     companion object {
         @Volatile
         private var instance: TopHeadlinesViewModelFactory? = null
-        fun getInstance(context: Context): TopHeadlinesViewModelFactory =
+        fun getInstance(): TopHeadlinesViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: TopHeadlinesViewModelFactory(Injection.provideRepository())
             }.also { instance = it }

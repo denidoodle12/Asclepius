@@ -13,6 +13,12 @@ class HistoryIndicatedRepository(private val historyDao: HistoryDao) {
         }
     }
 
+    suspend fun deleteAllHistory() {
+        withContext(Dispatchers.IO) {
+            historyDao.deleteAllHistory()
+        }
+    }
+
     suspend fun getAllHistory() : List<HistoryEntity> {
         return withContext(Dispatchers.IO) {
             historyDao.getAllHistory()

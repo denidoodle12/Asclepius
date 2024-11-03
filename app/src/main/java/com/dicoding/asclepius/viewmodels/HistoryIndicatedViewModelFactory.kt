@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.asclepius.data.local.HistoryIndicatedRepository
-import com.dicoding.asclepius.data.remote.TopHeadlinesRepository
 import com.dicoding.asclepius.di.Injection
 
 class HistoryIndicatedViewModelFactory private constructor(private val repository: HistoryIndicatedRepository): ViewModelProvider.NewInstanceFactory(){

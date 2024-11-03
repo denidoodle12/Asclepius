@@ -24,10 +24,10 @@
 
 
                 <ImageView
-                    android:id="@+id/result_image3"
+                    android:id="@+id/result_image"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_place_holder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -58,10 +58,10 @@
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/result_image3" />
+                    app:layout_constraintStart_toStartOf="@+id/result_image" />
 
                 <TextView
-                    android:id="@+id/result_label_cover"
+                    android:id="@+id/result_text_cover"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="6dp"
@@ -71,7 +71,7 @@
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:background="@drawable/d_shape_source_name"
-                    app:layout_constraintEnd_toEndOf="@+id/result_image3"
+                    app:layout_constraintEnd_toEndOf="@+id/result_image"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -103,7 +103,7 @@
 
 
                     <TextView
-                        android:id="@+id/result_label"
+                        android:id="@+id/result_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/result"

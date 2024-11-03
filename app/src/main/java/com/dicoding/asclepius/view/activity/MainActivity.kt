@@ -25,18 +25,14 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Setup BottomNavigationView with NavController
         binding.navView.setupWithNavController(navController)
 
-        // Add a listener to hide BottomNavigationView in specific fragments
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_history -> {
-                    // Hide BottomNavigationView in HistoryFragment
                     binding.navView.visibility = View.GONE
                 }
                 else -> {
-                    // Show BottomNavigationView in other fragments
                     binding.navView.visibility = View.VISIBLE
                 }
             }

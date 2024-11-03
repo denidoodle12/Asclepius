@@ -10,14 +10,37 @@
         android:id="@+id/tvHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:fontFamily="@font/vinilatest_bold"
         android:text="@string/history"
         android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/icon_delete_history"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:contentDescription="@string/content_description_bookmarks"
+        android:padding="6dp"
+        android:src="@drawable/baseline_delete_sweep_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/empty_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/empty_history"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHistory"

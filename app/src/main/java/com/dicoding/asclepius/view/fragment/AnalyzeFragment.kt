@@ -9,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import com.dicoding.asclepius.R
 import com.dicoding.asclepius.data.local.entity.HistoryEntity
@@ -24,11 +22,8 @@ import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModel
 import com.dicoding.asclepius.viewmodels.HistoryIndicatedViewModelFactory
 import androidx.navigation.fragment.findNavController
 import com.dicoding.asclepius.createImageUri
-import com.dicoding.asclepius.viewmodels.TopHeadlinesViewModel
-import com.dicoding.asclepius.viewmodels.TopHeadlinesViewModelFactory
 import com.yalantis.ucrop.UCrop
 import org.tensorflow.lite.task.vision.classifier.Classifications
-import java.io.File
 
 class AnalyzeFragment : Fragment() {
     private var _binding: FragmentAnalyzeBinding? = null
@@ -92,31 +87,29 @@ class AnalyzeFragment : Fragment() {
                 currentImageUri = resultUri
                 showImage()
             } else {
-                showToast("Crop gagal, coba lagi.")
-                Log.e("AnalyzeFragment", "Error: URI hasil crop null.")
+                showToast("Failed to Crop, Let's try again.")
+                Log.e("AnalyzeFragment", "Error: URI crop is null.")
             }
         } else if (result.resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(result.data!!)
             showToast("Error: ${cropError?.message}")
             Log.e("AnalyzeFragment", "UCrop Error: ${cropError?.message}")
         } else {
-            Log.e("AnalyzeFragment", "Result code tidak dikenali: ${result.resultCode}")
+            Log.e("AnalyzeFragment", "Result code isn't recognized: ${result.resultCode}")
         }
     }
 
     private fun startCrop(uri: Uri) {
-        // Panggil createImageUri untuk mendapatkan URI baru
         val destinationUri = createImageUri(requireContext())
         if (destinationUri != null) {
-            // Melanjutkan dengan UCrop
             val uCropIntent = UCrop.of(uri, destinationUri)
-                .withAspectRatio(1f, 1f)
-                .withMaxResultSize(1080, 1080)
+                .withAspectRatio(16f, 9f)
+                .withMaxResultSize(1920, 1080)
                 .getIntent(requireContext())
             launcherUCrop.launch(uCropIntent)
         } else {
-            Log.e("AnalyzeFragment", "Gagal membuat URI untuk gambar.")
-            showToast("Gagal membuat URI untuk gambar. Silakan coba lagi.")
+            Log.e("AnalyzeFragment", "Failed to create a URI for the image.")
+            showToast("Failed to create a URI for the image. Please try again.")
         }
     }
 

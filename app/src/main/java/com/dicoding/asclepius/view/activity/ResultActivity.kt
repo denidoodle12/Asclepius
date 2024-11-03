@@ -23,9 +23,9 @@ class ResultActivity : AppCompatActivity() {
         val showLabel = intent.getStringExtra(AnalyzeFragment.LABEL)
         val showCofScore = intent.getStringExtra(AnalyzeFragment.SCORE)
 
-        binding.resultImage3.setImageURI(showImage?.toUri())
-        binding.resultLabel.text = getString(R.string.result_label, showLabel)
-        binding.resultLabelCover.text = showLabel
+        binding.resultImage.setImageURI(showImage?.toUri())
+        binding.resultText.text = getString(R.string.result_label, showLabel)
+        binding.resultTextCover.text = showLabel
         binding.resultScore.text = getString(R.string.confidence_score, showCofScore)
 
     }

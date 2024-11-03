@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val factory = TopHeadlinesViewModelFactory.getInstance(requireActivity())
+        val factory = TopHeadlinesViewModelFactory.getInstance()
         val viewModel: TopHeadlinesViewModel by viewModels { factory }
 
         headlinesAdapter = TopHeadlinesAdapter { topHeadlines ->
