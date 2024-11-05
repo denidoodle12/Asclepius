@@ -13,6 +13,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.dicoding.asclepius.R
 import com.dicoding.asclepius.data.local.entity.HistoryEntity
 import com.dicoding.asclepius.databinding.FragmentAnalyzeBinding
@@ -30,7 +31,7 @@ class AnalyzeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var imageClassifierHelper: ImageClassifierHelper
-    private var currentImageUri: Uri? = null
+    //    private var currentImageUri: Uri? = null
     private var labelOfImage: String? = null
     private var scoreOfImage: String? = null
 
@@ -48,9 +49,15 @@ class AnalyzeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        viewModel.currentImageUri.observe(viewLifecycleOwner) { uri ->
+            uri?.let {
+                showImage()
+            }
+        }
+
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.analyzeButton.setOnClickListener {
-            currentImageUri?.let {
+            viewModel.currentImageUri.value?.let {
                 analyzeImage()
             } ?: run { showToast(getString(R.string.empty_image_warning)) }
         }
@@ -68,13 +75,12 @@ class AnalyzeFragment : Fragment() {
 
     private val launcherGallery = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         uri?.let {
-            currentImageUri = it
             startCrop(it)
         } ?: Log.d("Photo Picker", "No media selected")
     }
 
     private fun showImage() {
-        currentImageUri?.let {
+        viewModel.currentImageUri.value?.let {
             Log.d("Image URI", "showImage: $it")
             binding.previewImageView.setImageURI(it)
         }
@@ -84,7 +90,7 @@ class AnalyzeFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             val resultUri = UCrop.getOutput(result.data!!)
             if (resultUri != null) {
-                currentImageUri = resultUri
+                viewModel.setCurrentImageUri(resultUri)
                 showImage()
             } else {
                 showToast("Failed to Crop, Let's try again.")
@@ -94,6 +100,7 @@ class AnalyzeFragment : Fragment() {
             val cropError = UCrop.getError(result.data!!)
             showToast("Error: ${cropError?.message}")
             Log.e("AnalyzeFragment", "UCrop Error: ${cropError?.message}")
+            viewModel.setCurrentImageUri(null)
         } else {
             Log.e("AnalyzeFragment", "Result code isn't recognized: ${result.resultCode}")
         }
@@ -138,7 +145,7 @@ class AnalyzeFragment : Fragment() {
                             scoreOfImage = score.formatToString()
 
                             val history = HistoryEntity(
-                                historyOfImage = currentImageUri.toString(),
+                                historyOfImage = viewModel.currentImageUri.value.toString(),
                                 historyOfLabel = label,
                                 historyOfScore = score.formatToString()
                             )
@@ -150,12 +157,13 @@ class AnalyzeFragment : Fragment() {
             }
         )
 
-        currentImageUri?.let { uri ->
+        viewModel.currentImageUri.value?.let { uri ->
             imageClassifierHelper.classifyStaticImage(uri)
         } ?: showToast(getString(R.string.empty_image_warning))
     }
 
     private fun moveToResult() {
+        val currentImageUri = viewModel.currentImageUri.value
         if (currentImageUri != null && labelOfImage != null && scoreOfImage != null) {
             val intent = Intent(requireContext(), ResultActivity::class.java).apply {
                 putExtra(IMAGE_URI, currentImageUri.toString())
@@ -171,6 +179,7 @@ class AnalyzeFragment : Fragment() {
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
